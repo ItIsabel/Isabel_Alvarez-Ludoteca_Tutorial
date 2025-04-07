@@ -1,0 +1,46 @@
+<div class="container-edit">
+    @if (loan.id) {
+        <h1>Modificar préstamo</h1>
+    } @else {
+        <h1>Crear préstamo</h1>
+    }
+        <form>
+            <mat-form-field>
+                <mat-label>Identificador</mat-label>
+                <input type="text" matInput placeholder="Identificador" [(ngModel)]="loan.id" name="id" disabled>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label>Nombre del juego</mat-label>
+                <input type="text" matInput placeholder="Nombre de juego" [(ngModel)]="loan.game.title" name="title" required>
+                <mat-error>El juego no puede estar vacío</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Nombre del Cliente</mat-label>
+                <input type="text" matInput placeholder="Nombre de cliente" [(ngModel)]="loan.customer.name" name="name" required>
+                <mat-error>El nombre no puede estar vacío</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-hint>YYYY/MM/DD</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-hint>YYYY/MM/DD</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </form>
+    
+        <div class="buttons">
+            <button mat-stroked-button (click)="onClose()">Cerrar</button>
+            <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+        </div>
+    </div>

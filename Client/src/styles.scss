@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Estilos de author, category, customer y loan list-component-*/
+.container-list {
+    margin: 20px;
+  
+    mat-table {
+      margin-bottom: 20px; 
+      justify-content: space-evenly
+      ;
+
+      mat-row.mat-mdc-row.mdc-data-table__row.cdk-row:has(mat-cell:hover) {
+        background-color: #F2DFE4; /* Or any color you prefer */
+      }
+      mat-header-row {
+        background-color:#af818d;        
+          }
+
+        mat-header-cell {
+          text-transform: uppercase;
+          font-weight: bold;
+          color: white;
+        }  
+
+      .mat-column-id {
+        flex: 0 0 20%;
+        justify-content: center;
+      }
+  
+      .mat-column-action{
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  
+    .buttons {
+      text-align: right;
+    }
+  }
+
+  
+
+  /* Estilos de author, category, customer y loan edit-component-*/
+  .container-edit {
+    min-width: 350px;
+    max-width: 500px;
+    padding: 20px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom:20px;
+    }
+
+    .buttons {
+        text-align: right;
+
+        button {
+            margin-left: 10px;
+        }
+    }
+}
