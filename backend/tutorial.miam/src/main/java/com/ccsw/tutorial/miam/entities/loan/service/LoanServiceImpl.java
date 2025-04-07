@@ -11,7 +11,7 @@ import com.ccsw.tutorial.miam.entities.loan.model.LoanSearchDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -39,19 +39,30 @@ public class LoanServiceImpl implements LoanService {
      * {@inheritDoc}
      */
     @Override
-    public List<Loan> find(String titleGame, String nameCustomer, LocalDate dateRequest) {
+    public Page<Loan> findPagedLoans(LoanSearchDto searchDto) {
+        List<Loan> filteredLoans = this.findFilteredLoans(searchDto);
+        Pageable pageable = PageRequest.of(
+                searchDto.getPageable().getPageNumber(),
+                searchDto.getPageable().getPageSize(),
+                Sort.by("id").ascending());
+        return new PageImpl<>(filteredLoans, pageable, filteredLoans.size());
+    }
 
-        LoanSpecification titleGameSpec = new LoanSpecification(new SearchCriteria("game.title", ":", titleGame));
-        LoanSpecification nameCustomerSpec = new LoanSpecification(new SearchCriteria("customer.name", ":", nameCustomer));
+    /**
+     * {@inheritDoc}
+     */
+    public List<Loan> findFilteredLoans(LoanSearchDto searchDto) {
+        LoanSpecification titleGameSpec = new LoanSpecification(new SearchCriteria("game.title", ":", searchDto.getTitleGame()));
+        LoanSpecification nameCustomerSpec = new LoanSpecification(new SearchCriteria("customer.name", ":", searchDto.getNameCustomer()));
 
         Specification<Loan> spec = Specification.where(titleGameSpec).and(nameCustomerSpec);
 
-        if (dateRequest != null) {
+        if (searchDto.getRequestDate() != null) {
             //Sé que hay una parte de este codigo que deberia ir en el topredicate del LoanSpecification...y recibir por parametros el dateRequest,el startDate y el finishDate
             Specification<Loan> dateSpec = (root, query, cb) -> {
                 return cb.and(
-                        cb.lessThanOrEqualTo(root.get("startDate"), dateRequest),
-                        cb.greaterThanOrEqualTo(root.get("finishDate"), dateRequest)
+                        cb.lessThanOrEqualTo(root.get("startDate"), searchDto.getRequestDate()),
+                        cb.greaterThanOrEqualTo(root.get("finishDate"), searchDto.getRequestDate())
                 );
             };
             spec = Specification.where(titleGameSpec).and(nameCustomerSpec).and(dateSpec);
@@ -59,10 +70,6 @@ public class LoanServiceImpl implements LoanService {
         return this.loanRepository.findAll(spec);
     }
 
-    @Override
-    public Page<Loan> findPage(LoanSearchDto dto) {
-        return this.loanRepository.findAll(dto.getPageable().getPageable());
-    }
 
     /**
      * {@inheritDoc}
@@ -73,6 +80,7 @@ public class LoanServiceImpl implements LoanService {
         List<Loan> currentGameLoans = findCurrentGameLoans(dto);
 
         // Si el usuario tiene menos de dos juegos prestados y el juego no se está prestando
+
         if (currentCustomerLoans.size() < 2 && currentGameLoans.isEmpty()) {
             Loan loan;
             if (id == null) {
@@ -88,8 +96,13 @@ public class LoanServiceImpl implements LoanService {
 
             this.loanRepository.save(loan);
 
+            //Si la lista tiene 2 prestamos, quiere decir que el cliente ya tiene 2 prestamos
+
         } else if (currentCustomerLoans.size() >= 2) {
             throw new Exception("El usuario ya tiene 2 préstamos en vigor. No se le pueden prestar más juegos");
+
+
+            //Si el juego está en la lista, quiere decir que ya está prestado
 
         } else if (!currentGameLoans.isEmpty()) {
             throw new Exception("El juego no está disponible. Estará disponible a partir del " + currentGameLoans.get(0).getFinishDate());
@@ -123,4 +136,3 @@ public class LoanServiceImpl implements LoanService {
                 .collect(Collectors.toList());
     }
 }
-

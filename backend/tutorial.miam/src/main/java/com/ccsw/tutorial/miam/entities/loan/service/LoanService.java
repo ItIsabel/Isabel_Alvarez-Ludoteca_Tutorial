@@ -5,7 +5,6 @@ import com.ccsw.tutorial.miam.entities.loan.model.LoanDto;
 import com.ccsw.tutorial.miam.entities.loan.model.LoanSearchDto;
 import org.springframework.data.domain.Page;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface LoanService {
@@ -14,21 +13,19 @@ public interface LoanService {
     /**
      * Recupera los juegos filtrando opcionalmente por título , categoría y/o fecha
      *
-     * @param titleGame    título del juego
-     * @param nameCustomer nombre del Cliente
-     * @param requestDate  fecha para buscar
+     * @param searchDto con datos de paginacion y filtrado
      * @return {@link List} de {@link Loan}
      */
-    List<Loan> find(String titleGame, String nameCustomer, LocalDate requestDate);
+    List<Loan> findFilteredLoans(LoanSearchDto searchDto);
 
 
     /**
-     * Método para recuperar un listado paginado de {@link Loan}
+     * Método para recuperar un listado paginadoy filtrado de {@link Loan}
      *
-     * @param dto dto de búsqueda
+     * @param searchDto con datos de paginacion y filtrado
      * @return {@link Page} de {@link Loan}
      */
-    Page<Loan> findPage(LoanSearchDto dto);
+    Page<Loan> findPagedLoans(LoanSearchDto searchDto);
 
 
     /**
