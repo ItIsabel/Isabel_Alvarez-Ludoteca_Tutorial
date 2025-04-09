@@ -49,7 +49,7 @@ public class LoanController {
                 searchDto.getPageable().getPageable(), page.getTotalElements());
     }
 
-    /**
+    /** con este metodo funcionan los tests de LoanIT
      * Método para recuperar un listado paginado de {@link Loan}
      *
      * @param dto dto de búsqueda
@@ -64,6 +64,7 @@ public class LoanController {
      .collect(Collectors.toList());
      }
      */
+
     /**
      * Método para crear o actualizar un {@link Loan}
      *
@@ -76,5 +77,18 @@ public class LoanController {
 
         loanService.save(id, dto);
     }
+
+    /**
+     * Método para borrar un {@link Loan}
+     *
+     * @param id PK de la entidad
+     */
+    @Operation(summary = "Delete", description = "Method that deletes a Category")
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id) throws Exception {
+
+        this.loanService.delete(id);
+    }
+
 
 }

@@ -42,5 +42,4 @@ public class ResponsePage<T> extends PageImpl<T> {
     public ResponsePage() {
         super(new ArrayList<>());
     }
-
 }

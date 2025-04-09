@@ -1,6 +1,11 @@
 package com.ccsw.tutorial.miam.entities.customer.model;
 
+import com.ccsw.tutorial.miam.entities.loan.model.Loan;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author miam
@@ -17,6 +22,9 @@ public class Customer {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Loan> loans = new ArrayList<>();
 
     /**
      * @return id
@@ -44,5 +52,21 @@ public class Customer {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    /**
+     * @param loan add value of {@link #loans}.
+     */
+    public void addLoan(Loan loan) {
+        loans.add(loan);
+        loan.setCustomer(this);
+    }
+
+    /**
+     * @param loan delete value of {@link #loans}.
+     */
+    public void deleteLoan(Loan loan) {
+        loans.remove(loan);
     }
 }

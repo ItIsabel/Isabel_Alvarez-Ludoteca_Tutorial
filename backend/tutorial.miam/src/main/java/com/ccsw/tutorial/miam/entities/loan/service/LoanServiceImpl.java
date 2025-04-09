@@ -1,10 +1,8 @@
 package com.ccsw.tutorial.miam.entities.loan.service;
 
-import com.ccsw.tutorial.miam.common.criteria.SearchCriteria;
 import com.ccsw.tutorial.miam.entities.customer.service.CustomerService;
 import com.ccsw.tutorial.miam.entities.game.service.GameService;
 import com.ccsw.tutorial.miam.entities.loan.LoanRepository;
-import com.ccsw.tutorial.miam.entities.loan.LoanSpecification;
 import com.ccsw.tutorial.miam.entities.loan.model.Loan;
 import com.ccsw.tutorial.miam.entities.loan.model.LoanDto;
 import com.ccsw.tutorial.miam.entities.loan.model.LoanSearchDto;
@@ -12,7 +10,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,6 +32,11 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     CustomerService customerService;
 
+    @Override
+    public List<Loan> findFilteredLoans(LoanSearchDto searchDto) {
+        return List.of();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -51,6 +53,7 @@ public class LoanServiceImpl implements LoanService {
     /**
      * {@inheritDoc}
      */
+    /*
     public List<Loan> findFilteredLoans(LoanSearchDto searchDto) {
         LoanSpecification titleGameSpec = new LoanSpecification(new SearchCriteria("game.title", ":", searchDto.getTitleGame()));
         LoanSpecification nameCustomerSpec = new LoanSpecification(new SearchCriteria("customer.name", ":", searchDto.getNameCustomer()));
@@ -107,6 +110,15 @@ public class LoanServiceImpl implements LoanService {
         } else if (!currentGameLoans.isEmpty()) {
             throw new Exception("El juego no está disponible. Estará disponible a partir del " + currentGameLoans.get(0).getFinishDate());
         }
+    }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        if (loanRepository.findById(id) == null) {
+            throw new Exception("Not exists");
+        }
+
+        this.loanRepository.deleteById(id);
     }
 
     /**

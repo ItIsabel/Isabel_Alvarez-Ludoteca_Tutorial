@@ -38,4 +38,5 @@ public interface LoanService {
     void save(Long id, LoanDto dto) throws Exception;
 
 
+    void delete(Long id) throws Exception;
 }

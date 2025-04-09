@@ -151,22 +151,19 @@ loadFilteredPage(filterTitleGame?: Game, filterNameCustomer?: Customer, requestD
       });
   }
 
-      deleteLoan(loan: Loan) {
-          const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-              data: {
-                  title: 'Eliminar préstamo',
-                  description:
-                      'Atención: si borra el préstamo se perderán sus datos.<br> ¿Desea eliminar el préstamo?',
-              },
-          });
-  
-          dialogRef.afterClosed().subscribe((result) => {
-              if (result) {
-                  this.loanService.deleteLoan(loan.id).subscribe((result) => {
-                      this.ngOnInit();
-                  });
-              }
-          });
+deleteLoan(loan: Loan) {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+        data: {  title: 'Eliminar préstamo', description: 'Atención: si borra el préstamo se perderán sus datos.<br> ¿Desea eliminar el préstamo?',
+        },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+            this.loanService.deleteLoan(loan.id).subscribe((result) => {
+                this.ngOnInit();
+            });
+        }
+    });
 
 }
 }

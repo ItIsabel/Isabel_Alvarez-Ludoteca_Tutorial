@@ -1,35 +1,39 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Loan } from '../model/Loan'
 import { LoanService } from '../loan.service'
-import { MatCardActions } from '@angular/material/card';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-loan-edit',
+  standalone: true,
   imports: [
+    CommonModule, // Necesario para @if y otras directivas
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule, 
     MatInputModule, 
     MatButtonModule,
     MatDatepickerModule,
-    MatCardActions
-    ,],
+    MatNativeDateModule
+  ],
+  providers: [
+    provideNativeDateAdapter() // Proveído correctamente
+  ],
   templateUrl: './loan-edit.component.html',
-  styleUrl: './loan-edit.component.scss'
+  styleUrl: './loan-edit.component.scss',
 })
 
 export class LoanEditComponent implements OnInit {
   loan: Loan;
-  finishDateControl
 
   constructor(
       public dialogRef: MatDialogRef<LoanEditComponent>,
@@ -39,15 +43,23 @@ export class LoanEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
+    
+    if (!this.loan.game) {
+      this.loan.game.title = '' ;
+    }
+    
+    if (!this.loan.customer) {
+      this.loan.customer.name = '';
+    }
   }
 
   onSave() {
       this.loanService.saveLoan(this.loan).subscribe(() => {
-          this.dialogRef.close();
+          this.dialogRef.close(true); // Pasar true para indicar que se guardó
       });
   }
 
   onClose() {
-      this.dialogRef.close();
+      this.dialogRef.close(false); // Pasar false para indicar que se canceló
   }
 }
