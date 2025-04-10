@@ -10,11 +10,11 @@ Este proyecto es una Aplicación de Página Única (SPA) para gestionar una ludo
 - **Mensajes de error:** Mostrar mensajes claros al usuario cuando ocurren errores de validación o violaciones de integridad
 
 - **## tests** 
-Funcionan no funcionan correctamente los siguientes :
-    public void saveWithoutIdShouldCreateNewLoan() {
-    public void getExistsAuthorIdShouldReturnAuthor() {
-    public void modifyWithExistIdShouldModifyGame() {
-    public void saveWithoutIdShouldCreateNewGame() {
+- No funcionan correctamente los siguientes :
+   - public void saveWithoutIdShouldCreateNewLoan() {
+   - public void getExistsAuthorIdShouldReturnAuthor() {
+   - public void modifyWithExistIdShouldModifyGame() {
+   - public void saveWithoutIdShouldCreateNewGame() {
 
 … aunque la funcionalidad del frontend funciona según lo esperado.
 
