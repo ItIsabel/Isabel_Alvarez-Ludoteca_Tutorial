@@ -196,7 +196,7 @@ public class LoanIT2 {
 
         // Guardamos el nuevo préstamo
         ResponseEntity<LoanDto> saveResponse = restTemplate.postForEntity(
-                LOCALHOST + port + SERVICE_PATH + "/save",
+                LOCALHOST + port + SERVICE_PATH,
                 dto,
                 LoanDto.class
         );
@@ -206,14 +206,14 @@ public class LoanIT2 {
 
         // Verificamos que se ha guardado consultando con los filtros adecuados
         LoanSearchDto searchDto = new LoanSearchDto();
-        searchDto.setTitleGame("On Mars");  // Asumiendo que este es el título asociado al GameId 1
-        searchDto.setNameCustomer("Isabel Alvarez");  // Asumiendo que este es el nombre asociado al CustomerId 1
+        searchDto.setTitleGame("On Mars");
+        searchDto.setNameCustomer("Isabel Alvarez");
         searchDto.setRequestDate(LocalDate.parse("2025-03-15"));
-        searchDto.setPageable(new PageableRequest(0, 10));
+        searchDto.setPageable(new PageableRequest(0, 5));
 
         ResponseEntity<ResponsePage<LoanDto>> response = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH,
-                HttpMethod.POST,
+                HttpMethod.PUT,
                 new HttpEntity<>(searchDto),
                 responseTypePage
         );

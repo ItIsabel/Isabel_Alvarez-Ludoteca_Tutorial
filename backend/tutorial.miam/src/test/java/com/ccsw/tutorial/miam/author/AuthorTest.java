@@ -43,9 +43,6 @@ public class AuthorTest {
 
     @Test
     public void getNotExistsAuthorIdShouldReturnNull() {
-
-        when(authorRepository.findById(NOT_EXISTS_AUTHOR_ID)).thenReturn(Optional.empty());
-
         Author author = authorService.get(NOT_EXISTS_AUTHOR_ID);
 
         assertNull(author);

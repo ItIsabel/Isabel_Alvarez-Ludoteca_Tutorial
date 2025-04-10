@@ -1,18 +1,21 @@
 package com.ccsw.tutorial.miam.entities.loan.service;
 
+import com.ccsw.tutorial.miam.common.criteria.SearchCriteria;
 import com.ccsw.tutorial.miam.entities.customer.service.CustomerService;
 import com.ccsw.tutorial.miam.entities.game.service.GameService;
 import com.ccsw.tutorial.miam.entities.loan.LoanRepository;
+import com.ccsw.tutorial.miam.entities.loan.LoanSpecification;
 import com.ccsw.tutorial.miam.entities.loan.model.Loan;
 import com.ccsw.tutorial.miam.entities.loan.model.LoanDto;
 import com.ccsw.tutorial.miam.entities.loan.model.LoanSearchDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,36 +35,23 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     CustomerService customerService;
 
-    @Override
-    public List<Loan> findFilteredLoans(LoanSearchDto searchDto) {
-        return List.of();
-    }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public Page<Loan> findPagedLoans(LoanSearchDto searchDto) {
-        List<Loan> filteredLoans = this.findFilteredLoans(searchDto);
-        Pageable pageable = PageRequest.of(
-                searchDto.getPageable().getPageNumber(),
-                searchDto.getPageable().getPageSize(),
-                Sort.by("id").ascending());
-        return new PageImpl<>(filteredLoans, pageable, filteredLoans.size());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    /*
-    public List<Loan> findFilteredLoans(LoanSearchDto searchDto) {
+    public Page<Loan> findFilteredPagedLoans(LoanSearchDto searchDto, Pageable pageable) {
         LoanSpecification titleGameSpec = new LoanSpecification(new SearchCriteria("game.title", ":", searchDto.getTitleGame()));
         LoanSpecification nameCustomerSpec = new LoanSpecification(new SearchCriteria("customer.name", ":", searchDto.getNameCustomer()));
-
         Specification<Loan> spec = Specification.where(titleGameSpec).and(nameCustomerSpec);
 
+        /** PENSABA QUE ASÍ FUNCIONARIA PERO NO ...
+         LoanSpecification startDate = new LoanSpecification(new SearchCriteria("startDate", "<=", searchDto.getRequestDate()));
+         LoanSpecification finishDate = new LoanSpecification(new SearchCriteria("finishDate", "=>", searchDto.getRequestDate()));
+
+         Specification<Loan> spec = Specification.where(titleGameSpec).and(nameCustomerSpec).and(startDate).and(finishDate);
+         */
         if (searchDto.getRequestDate() != null) {
-            //Sé que hay una parte de este codigo que deberia ir en el topredicate del LoanSpecification...y recibir por parametros el dateRequest,el startDate y el finishDate
+            //Sé que hay una parte de este codigo que deberia ir en el topredicate del LoanSpecification...
             Specification<Loan> dateSpec = (root, query, cb) -> {
                 return cb.and(
                         cb.lessThanOrEqualTo(root.get("startDate"), searchDto.getRequestDate()),
@@ -70,21 +60,24 @@ public class LoanServiceImpl implements LoanService {
             };
             spec = Specification.where(titleGameSpec).and(nameCustomerSpec).and(dateSpec);
         }
-        return this.loanRepository.findAll(spec);
+        return this.loanRepository.findAll(spec, pageable);
     }
-
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void save(Long id, LoanDto dto) throws Exception {
-        List<Loan> currentCustomerLoans = findCurrentCustomerLoans(dto);
+        System.out.println("estoy en save");
+        List<Loan> currentCustomerLoans = findCustomerLoansOnSavingDates(dto);
         List<Loan> currentGameLoans = findCurrentGameLoans(dto);
 
         // Si el usuario tiene menos de dos juegos prestados y el juego no se está prestando
 
         if (currentCustomerLoans.size() < 2 && currentGameLoans.isEmpty()) {
+            System.out.println(" los customer loans" + currentCustomerLoans);
+            System.out.println(" los CurrentGame  loans" + currentGameLoans);
+
             Loan loan;
             if (id == null) {
                 loan = new Loan();
@@ -124,13 +117,14 @@ public class LoanServiceImpl implements LoanService {
     /**
      * Método para recuperar un listado de {@link Loan}
      *
-     * @return una lista con los préstamos actuales de un cliente especifico.
+     * @param dto recoge el cliente, el juego y las fechas qen las que quiere el prestamo. {@link LoanDto}
+     * @return una lista con los préstamos en el rango de fechas solciitado por dto de un cliente especifico.
      */
-    private List<Loan> findCurrentCustomerLoans(LoanDto dto) {
-        List<Loan> listCustomerLoans = loanRepository.findByCustomerId(dto.getCustomer().getId());
+    private List<Loan> findCustomerLoansOnSavingDates(LoanDto dto) {
+        List<Loan> prestamosPorCliente = this.loanRepository.findByCustomerId(dto.getCustomer().getId());
 
-        return listCustomerLoans.stream()
-                .filter(e -> e.getStartDate().isBefore(LocalDate.now()) && e.getFinishDate().isAfter(LocalDate.now()))
+        return prestamosPorCliente.stream()
+                .filter(e -> !e.getStartDate().isAfter(dto.getFinishDate()) && !e.getFinishDate().isBefore(dto.getStartDate()))
                 .collect(Collectors.toList());
     }
 
@@ -144,7 +138,7 @@ public class LoanServiceImpl implements LoanService {
         List<Loan> listGameLoans = loanRepository.findByGameId(dto.getGame().getId());
 
         return listGameLoans.stream()
-                .filter(e -> e.getStartDate().isBefore(LocalDate.now()) && e.getFinishDate().isAfter(LocalDate.now()))
+                .filter(e -> !e.getStartDate().isAfter(dto.getFinishDate()) && !e.getFinishDate().isBefore(dto.getStartDate()))
                 .collect(Collectors.toList());
     }
 }

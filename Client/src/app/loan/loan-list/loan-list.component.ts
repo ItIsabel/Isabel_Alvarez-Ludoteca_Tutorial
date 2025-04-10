@@ -43,7 +43,7 @@ import { Customer } from '../../customer/model/Customer';
     MatPaginatorModule
   ],
   templateUrl: './loan-list.component.html',
-  styleUrl: './loan-list.component.scss'
+  styleUrls: ['./loan-list.component.scss']
 })
 export class LoanListComponent {
   customers: Customer[];
@@ -52,7 +52,7 @@ export class LoanListComponent {
 
   //datos para el filtrado
   filterCustomer: Customer;
-  filterGameTitle: Game;
+  filterGame: Game;
   filterDate: Date;
 
   //datos para el paginado
@@ -80,7 +80,7 @@ export class LoanListComponent {
 
 }
 
-loadFilteredPage(filterTitleGame?: Game, filterNameCustomer?: Customer, requestDate?: Date, event?: PageEvent) {
+loadFilteredPage(event?: PageEvent) {
     const pageable: Pageable = {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
@@ -100,11 +100,10 @@ loadFilteredPage(filterTitleGame?: Game, filterNameCustomer?: Customer, requestD
       // Creamos un objeto para enviar los filtros junto con la paginación
   const request = {
     pageable: pageable,
-    filters: {
-        titleGame: filterTitleGame?.title || null,
-        nameCustomer: filterNameCustomer?.name || null,
-        requestDate: requestDate || null
-    }
+    titleGame: this.filterGame?.title || null,
+    nameCustomer: this.filterCustomer?.name || null,
+    requestDate: this.filterDate || null
+    
   };
 
     this.loanService.getFilteredPagedLoans(request).subscribe((data) => {
@@ -117,18 +116,14 @@ loadFilteredPage(filterTitleGame?: Game, filterNameCustomer?: Customer, requestD
 
 
   onCleanFilter(): void {
-    this.filterGameTitle = null;
+    this.filterGame = null;
     this.filterCustomer = null;
     this.filterDate = null;
     this.onSearch();
   }
 
   onSearch(): void {
-      this.loadFilteredPage(
-          this.filterGameTitle || null,
-          this.filterCustomer || null,
-          this.filterDate || null
-      );
+      this.loadFilteredPage();
   }
 
   createLoan() {

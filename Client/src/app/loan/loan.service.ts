@@ -18,13 +18,7 @@ export class LoanService {
 
   
   getFilteredPagedLoans(request: any): Observable<LoanPage> {
-    const filteredRequest = {
-      pageable: request.pageable,
-      titleGame: request.filters?.titleGame || null,
-      nameCustomer: request.filters?.nameCustomer || null,
-      requestDate: request.filters?.requestDate || null
-      };
-    return this.http.post<LoanPage>(this.baseUrl, filteredRequest);
+    return this.http.post<LoanPage>(this.baseUrl, request);
   }
 
   saveLoan(loan: Loan): Observable<Loan> {

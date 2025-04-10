@@ -5,7 +5,7 @@ export class Loan {
     id: number;
     game: Game;
     customer: Customer;
-    startDate: Date;
-    finishDate: Date;
+    startDate: string;
+    finishDate: string;
     
 }

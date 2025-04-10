@@ -6,5 +6,4 @@ export const routes: Routes = [
     { path: 'games', loadComponent: () => import('./game/game-list/game-list.component').then(m => m.GameListComponent)},
     { path: 'customers', loadComponent: () => import('./customer/customer-list/customer-list.component').then(m => m.CustomerListComponent)},
     { path: 'loans', loadComponent: () => import('./loan/loan-list/loan-list.component').then(m => m.LoanListComponent)},
-    { path: 'login', loadComponent: () => import('./login/login/login-component').then(m => m.LoginComponent)},
 ];

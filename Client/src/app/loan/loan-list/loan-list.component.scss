@@ -1,6 +1,7 @@
-.container {
-    margin: 20px;
 
+
+.container-list {
+    margin: 20px;
     .filters {
         display: flex;
 
@@ -18,4 +19,37 @@
             }
         }
     }
-}
+  
+    mat-table {
+      margin-bottom: 20px; 
+      justify-content: space-evenly
+      ;
+
+      mat-row.mat-mdc-row.mdc-data-table__row.cdk-row:has(mat-cell:hover) {
+        background-color: #F2DFE4; /* Or any color you prefer */
+      }
+      mat-header-row {
+        background-color:#af818d;        
+          }
+
+        mat-header-cell {
+          text-transform: uppercase;
+          font-weight: bold;
+          color: white;
+        }  
+
+      .mat-column-id {
+        flex: 0 0 20%;
+        justify-content: center;
+      }
+  
+      .mat-column-action{
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  
+    .buttons {
+      text-align: right;
+    }
+  }
