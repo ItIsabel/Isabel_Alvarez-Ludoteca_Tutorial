@@ -1,6 +1,6 @@
 # Ludoteca SPA - MVP
 
-Este proyecto es una Aplicación de Página Única (SPA) para gestionar una ludoteca que maneja préstamos de juegos de mesa a clientes.
+Este proyecto es una Aplicación de Página Única (SPA) para gestionar una ludoteca que maneja préstamos de juegos para clientes.
 
 ## Objetivos No Conseguidos
 
@@ -21,7 +21,7 @@ Este proyecto es una Aplicación de Página Única (SPA) para gestionar una ludo
 
 ## Estado del Proyecto
 
-### Características Completadas
+### Características Conseguidas
 
 #### Sección de Filtrado
 - Título del Juego: Filtro desplegable para mostrar préstamos por juego seleccionado
@@ -49,7 +49,31 @@ Este proyecto es una Aplicación de Página Única (SPA) para gestionar una ludo
 - Cuando se elimina un cliente, todos los préstamos asociados son eliminados (Cascade OneToMany)
 - Solo la categoría "Ameritrash" puede ser eliminada (porque no tiene juegos asociados)
 
-## Notas de Implementación Técnica
+
+### CONSIDERACIONES
+
+- Si un cliente se borra. se borran los préstamos asociados a él (
+OnetoMany on delete cascade).
+
+- La única categoría que se puede borrar es Ameritrash porque no tiene
+juegos asociados.
+
+#### ANGULAR:
+
+- Como se repetían mucho los estilos. He creado un container-list para los
+listados (salvo el de games que va por cards) y container-edit (para los
+edit-dialogs) y aplicado los estilos en el styles.scss
+
+#### IMPLEMENTACIONES FUTURAS:
+
+- Seria guay terminar todas las validaciones y mostrar mensajes al
+usuario, porque cuando da fallos de violación de integridad y demás no
+le salta nada...
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Notas de Implementación Técnica - Esto ya es para mi =):
 
 ### Backend
 - Framework Spring Boot
