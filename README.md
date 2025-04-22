@@ -200,4 +200,5 @@ scoop install main/nodejs
 2. Asignar path en app.routes.ts :   `{ path: 'categories', loadComponent: () => import('./category/category-list/category-list.component').then(m => m.CategoryListComponent)},`
 3. crear un nuevo componente: `ng generate component core/header` otro ejemplo `ng generate component category/category-list`
 4. añadir servicio `ng generate service game/game`
+5. imagenes public/img/foto.png
 
