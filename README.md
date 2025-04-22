@@ -144,3 +144,61 @@ scoop install main/nodejs
 3. Añadir Angular Material: `ng add @angular/material`
 4. Iniciar el proyecto: `ng serve`
 
+### Codigos utiles:
+1. Crear core de la app:
+   - `ng generate module core`
+   - agregar el CoreModule en Imports del app.module.ts
+```powershell
+import { CoreModule } from './core/core.module';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CoreModule,
+    BrowserAnimationsModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+   -añadir dependencias Material en el core y exportarlo en HeaderCompoent para poder utilizarlo en todas las paginas
+```powershell
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { HeaderComponent } from './header/header.component';
+import { RouterModule } from '@angular/router';
+
+
+@NgModule({
+  declarations: [HeaderComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatIconModule, 
+    MatToolbarModule,
+  ],
+  exports: [
+    HeaderComponent
+  ]
+})
+export class CoreModule { }
+```
+   - añadir el HeaderComponent al app.component.html
+```powershell
+<div>
+  <app-header></app-header>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+```
+2. Asignar path en app.routes.ts :   `{ path: 'categories', loadComponent: () => import('./category/category-list/category-list.component').then(m => m.CategoryListComponent)},`
+3. crear un nuevo componente: `ng generate component core/header` otro ejemplo `ng generate component category/category-list`
+
