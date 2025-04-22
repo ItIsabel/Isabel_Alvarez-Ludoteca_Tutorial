@@ -145,50 +145,48 @@ scoop install main/nodejs
 4. Iniciar el proyecto: `ng serve`
 
 ### Codigos utiles:
-1. Crear core de la app:
-   - `ng generate module core`
-   - agregar el CoreModule en Imports del app.module.ts
+1. Crear Header de la app:
+   - `ng generate component core/header`
+   - agregar materialModules en el header.component.ts
 ```powershell
-import { CoreModule } from './core/core.module';
+    import { CommonModule } from '@angular/common';
+    import { Component } from '@angular/core';
+    import { RouterModule } from '@angular/router';
+    import { MatIconModule } from '@angular/material/icon';
+    import { MatToolbarModule } from '@angular/material/toolbar';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+    @Component({
+        selector: 'app-header',
+        standalone: true,
+        imports: [
+            CommonModule,
+            RouterModule,
+            MatIconModule, 
+            MatToolbarModule,
+        ],
+        templateUrl: './header.component.html',
+        styleUrl: './header.component.scss'
+    })
+    export class HeaderComponent {
+
+    }
 ```
-   -añadir dependencias Material en el core y exportarlo en HeaderCompoent para poder utilizarlo en todas las paginas
+   -añadir el HeaderComponent al App.component.html
 ```powershell
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { HeaderComponent } from './header/header.component';
-import { RouterModule } from '@angular/router';
+    import { Component } from '@angular/core';
+    import { RouterOutlet } from '@angular/router';
+    import { HeaderComponent } from '../core/header/header.component';
 
-
-@NgModule({
-  declarations: [HeaderComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatIconModule, 
-    MatToolbarModule,
-  ],
-  exports: [
-    HeaderComponent
-  ]
-})
-export class CoreModule { }
+    @Component({
+        selector: 'app-root',
+        standalone: true,
+        imports: [RouterOutlet, HeaderComponent],
+        templateUrl: './app.component.html',
+        styleUrl: './app.component.scss'
+    })
+    export class AppComponent {
+        title = 'Tutorial de Angular';
+    }
 ```
    - añadir el HeaderComponent al app.component.html
 ```powershell
