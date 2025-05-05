@@ -1,7 +1,7 @@
 package com.ccsw.tutorial.miam.category;
 
 
-import com.ccsw.tutorial.miam.entities.category.model.CategoryDto;
+import com.ccsw.tutorial.miam.cases.category.model.CategoryDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

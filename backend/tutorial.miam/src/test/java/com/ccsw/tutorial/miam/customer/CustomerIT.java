@@ -1,6 +1,6 @@
 package com.ccsw.tutorial.miam.customer;
 
-import com.ccsw.tutorial.miam.entities.customer.model.CustomerDto;
+import com.ccsw.tutorial.miam.cases.customer.model.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

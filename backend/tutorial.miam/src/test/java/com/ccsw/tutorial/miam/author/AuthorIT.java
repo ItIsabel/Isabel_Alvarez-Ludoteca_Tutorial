@@ -1,9 +1,9 @@
 package com.ccsw.tutorial.miam.author;
 
+import com.ccsw.tutorial.miam.cases.author.model.AuthorDto;
+import com.ccsw.tutorial.miam.cases.author.model.AuthorSearchDto;
 import com.ccsw.tutorial.miam.common.pagination.PageableRequest;
 import com.ccsw.tutorial.miam.config.ResponsePage;
-import com.ccsw.tutorial.miam.entities.author.model.AuthorDto;
-import com.ccsw.tutorial.miam.entities.author.model.AuthorSearchDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

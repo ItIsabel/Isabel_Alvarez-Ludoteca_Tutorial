@@ -1,12 +1,12 @@
 package com.ccsw.tutorial.miam.loan;
 
-import com.ccsw.tutorial.miam.entities.customer.model.CustomerDto;
-import com.ccsw.tutorial.miam.entities.game.model.GameDto;
-import com.ccsw.tutorial.miam.entities.game.service.GameServiceImpl;
-import com.ccsw.tutorial.miam.entities.loan.LoanRepository;
-import com.ccsw.tutorial.miam.entities.loan.model.Loan;
-import com.ccsw.tutorial.miam.entities.loan.model.LoanDto;
-import com.ccsw.tutorial.miam.entities.loan.service.LoanServiceImpl;
+import com.ccsw.tutorial.miam.cases.customer.model.CustomerDto;
+import com.ccsw.tutorial.miam.cases.game.model.GameDto;
+import com.ccsw.tutorial.miam.cases.game.service.GameServiceImpl;
+import com.ccsw.tutorial.miam.cases.loan.LoanRepository;
+import com.ccsw.tutorial.miam.cases.loan.model.Loan;
+import com.ccsw.tutorial.miam.cases.loan.model.LoanDto;
+import com.ccsw.tutorial.miam.cases.loan.service.LoanServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

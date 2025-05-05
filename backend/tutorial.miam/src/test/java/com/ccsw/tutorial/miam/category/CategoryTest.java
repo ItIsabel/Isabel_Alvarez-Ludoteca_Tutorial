@@ -1,9 +1,9 @@
 package com.ccsw.tutorial.miam.category;
 
-import com.ccsw.tutorial.miam.entities.category.CategoryRepository;
-import com.ccsw.tutorial.miam.entities.category.model.Category;
-import com.ccsw.tutorial.miam.entities.category.model.CategoryDto;
-import com.ccsw.tutorial.miam.entities.category.service.CategoryServiceImpl;
+import com.ccsw.tutorial.miam.cases.category.CategoryRepository;
+import com.ccsw.tutorial.miam.cases.category.model.Category;
+import com.ccsw.tutorial.miam.cases.category.model.CategoryDto;
+import com.ccsw.tutorial.miam.cases.category.service.CategoryServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

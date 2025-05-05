@@ -1,8 +1,8 @@
 package com.ccsw.tutorial.miam.author;
 
-import com.ccsw.tutorial.miam.entities.author.AuthorRepository;
-import com.ccsw.tutorial.miam.entities.author.model.Author;
-import com.ccsw.tutorial.miam.entities.author.service.AuthorServiceImpl;
+import com.ccsw.tutorial.miam.cases.author.AuthorRepository;
+import com.ccsw.tutorial.miam.cases.author.model.Author;
+import com.ccsw.tutorial.miam.cases.author.service.AuthorServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

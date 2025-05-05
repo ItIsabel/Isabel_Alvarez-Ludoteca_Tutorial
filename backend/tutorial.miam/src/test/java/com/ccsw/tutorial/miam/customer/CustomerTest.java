@@ -1,10 +1,10 @@
 package com.ccsw.tutorial.miam.customer;
 
 
-import com.ccsw.tutorial.miam.entities.customer.CustomerRepository;
-import com.ccsw.tutorial.miam.entities.customer.model.Customer;
-import com.ccsw.tutorial.miam.entities.customer.model.CustomerDto;
-import com.ccsw.tutorial.miam.entities.customer.service.CustomerServiceImpl;
+import com.ccsw.tutorial.miam.cases.customer.CustomerRepository;
+import com.ccsw.tutorial.miam.cases.customer.model.Customer;
+import com.ccsw.tutorial.miam.cases.customer.model.CustomerDto;
+import com.ccsw.tutorial.miam.cases.customer.service.CustomerServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;

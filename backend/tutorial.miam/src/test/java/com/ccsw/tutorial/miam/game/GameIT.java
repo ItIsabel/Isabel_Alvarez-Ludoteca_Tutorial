@@ -1,8 +1,8 @@
 package com.ccsw.tutorial.miam.game;
 
-import com.ccsw.tutorial.miam.entities.author.model.AuthorDto;
-import com.ccsw.tutorial.miam.entities.category.model.CategoryDto;
-import com.ccsw.tutorial.miam.entities.game.model.GameDto;
+import com.ccsw.tutorial.miam.cases.author.model.AuthorDto;
+import com.ccsw.tutorial.miam.cases.category.model.CategoryDto;
+import com.ccsw.tutorial.miam.cases.game.model.GameDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
