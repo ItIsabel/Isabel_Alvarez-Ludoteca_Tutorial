@@ -144,3 +144,61 @@ scoop install main/nodejs
 3. Añadir Angular Material: `ng add @angular/material`
 4. Iniciar el proyecto: `ng serve`
 
+### Codigos utiles:
+1. Crear Header de la app:
+   - `ng generate component core/header`
+   - agregar materialModules en el header.component.ts
+```powershell
+    import { CommonModule } from '@angular/common';
+    import { Component } from '@angular/core';
+    import { RouterModule } from '@angular/router';
+    import { MatIconModule } from '@angular/material/icon';
+    import { MatToolbarModule } from '@angular/material/toolbar';
+
+    @Component({
+        selector: 'app-header',
+        standalone: true,
+        imports: [
+            CommonModule,
+            RouterModule,
+            MatIconModule, 
+            MatToolbarModule,
+        ],
+        templateUrl: './header.component.html',
+        styleUrl: './header.component.scss'
+    })
+    export class HeaderComponent {
+
+    }
+```
+   -añadir el HeaderComponent al App.component.html
+```powershell
+    import { Component } from '@angular/core';
+    import { RouterOutlet } from '@angular/router';
+    import { HeaderComponent } from '../core/header/header.component';
+
+    @Component({
+        selector: 'app-root',
+        standalone: true,
+        imports: [RouterOutlet, HeaderComponent],
+        templateUrl: './app.component.html',
+        styleUrl: './app.component.scss'
+    })
+    export class AppComponent {
+        title = 'Tutorial de Angular';
+    }
+```
+   - añadir el HeaderComponent al app.component.html
+```powershell
+<div>
+  <app-header></app-header>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+```
+2. Asignar path en app.routes.ts :   `{ path: 'categories', loadComponent: () => import('./category/category-list/category-list.component').then(m => m.CategoryListComponent)},`
+3. crear un nuevo componente: `ng generate component core/header` otro ejemplo `ng generate component category/category-list`
+4. añadir servicio `ng generate service game/game`
+5. imagenes public/img/foto.png
+
