@@ -4,7 +4,7 @@ Este proyecto es una Aplicación de Página Única (SPA) para gestionar una ludo
 
 ## Objetivos No Conseguidos
 
-- **Filtrado:** Que el filtro encuentre préstamos donde FechaBusqueda = FechaInicioPrestamo
+- **Filtrado:** Que el filtro encuentre préstamos donde FechaBusqueda == FechaInicioPrestamo
 - **Validación de fechas:** La fecha de fin no puede ser anterior a la fecha de inicio
 - **Alertas:** Mostrar alerta si se intenta guardar un periodo mayor de 14 días
 - **Mensajes de error:** Mostrar mensajes claros al usuario cuando ocurren errores de validación o violaciones de integridad
